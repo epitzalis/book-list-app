@@ -1,3 +1,5 @@
+This project is the frontend of the API [book-list-api](https://github.com/epitzalis/book-list-api) 
+
 # BookListApp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.6.
