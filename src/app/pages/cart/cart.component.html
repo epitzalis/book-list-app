@@ -1,1 +1,24 @@
-<p>cart works!</p>
+
+<h5 style="margin-bottom: 1rem;">Books added to cart</h5>
+
+<!-- <ul>
+  <li >
+    {{book.name}} - Amount: {{book.amount}}
+  </li>
+
+
+
+</ul> -->
+
+<div *ngFor="let book of listCartBook" style="padding-left: 1.5rem;" class="form-group row" >
+  <label [for]="book.id" class="col-form-label" style="margin-right: 1rem;">{{book.name}}</label>
+  <div>
+    <input (keypress)="onKeyPressNumber($event)" class="form-control" type="number" [value]="book.amount"
+        [id]="book.id" min="0" max="999" >
+  </div>
+  <div style="margin-top: 5px; margin-left: 1rem;">
+    {{book.amount}} * {{book.price}} = {{book.amount * book.price}} €
+  </div>
+</div>
+
+<hr>

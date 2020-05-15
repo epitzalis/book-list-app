@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { BookService } from '../../services/book.service';
+import { Book } from '../../models/book.model';
+
+import { take } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-home',
@@ -7,9 +12,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  public listBook: Book[] = [];
+
+  constructor(
+    public readonly bookService: BookService
+  ) { }
 
   ngOnInit(): void {
+
+    this.bookService.getBooks().pipe(take(1)).subscribe((resp: Book[]) => {
+      this.listBook = resp;
+    });
+
   }
 
 }

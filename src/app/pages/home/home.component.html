@@ -1,1 +1,18 @@
-<p>home works!</p>
+
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+  <div *ngFor="let book of listBook" class="col mb-4">
+    <div class="card" style="padding: 1rem;">
+      <h5 class="card-title alignCenter"><b>{{book.name | uppercase}}</b></h5>
+      <div class="alignCenter">
+        <p>{{book.price}} €</p>
+        <img [src]="book.photoUrl" class="card-img-top imgBook" [alt]="book.name">
+      </div>
+      <div class="card-body">
+        <p class="card-text">{{book.description}}</p>
+        <div class="alignCenter" (click)="bookService.addBookToCart(book)">
+          <i class="fas fa-cart-plus addCar"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
