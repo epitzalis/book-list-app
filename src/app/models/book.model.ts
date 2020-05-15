@@ -1,7 +1,7 @@
 export interface Book {
   id?: string;
   name: string;
-  autor: string;
+  author: string;
   isbn: string;
   description?: string;
   photoUrl?: string;

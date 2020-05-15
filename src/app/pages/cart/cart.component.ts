@@ -11,19 +11,33 @@ declare const $;
 export class CartComponent implements OnInit {
 
   public listCartBook: Book[] = [];
+  public totalPrice = 0;
 
   constructor(
-    public readonly bookService: BookService
+    private readonly _bookService: BookService
   ) { }
 
   ngOnInit(): void {
 
-    this.listCartBook = this.bookService.getBooksFromCart();
+    this.listCartBook = this._bookService.getBooksFromCart();
+    this.getTotalPrice(this.listCartBook);
 
   }
 
-  public onKeyPressNumber(event: any) {
-    event.preventDefault(); // rechace keypress
+  public getTotalPrice(listCartBook: Book[]): void {
+    let totalPrice = 0;
+    listCartBook.forEach((book: Book) => {
+      totalPrice += book.amount * book.price;
+    });
+    this.totalPrice = totalPrice;
   }
+
+  public onInputNumberChange(action: string, book: Book) {
+    const amount = action === 'plus' ? book.amount + 1 : book.amount - 1;
+    book.amount = Number(amount);
+    this.listCartBook = this._bookService.updateAmountBook(book);
+    this.getTotalPrice(this.listCartBook);
+  }
+
 
 }

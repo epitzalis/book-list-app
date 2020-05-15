@@ -3,12 +3,13 @@
   <div *ngFor="let book of listBook" class="col mb-4">
     <div class="card" style="padding: 1rem;">
       <h5 class="card-title alignCenter"><b>{{book.name | uppercase}}</b></h5>
+      <h6 class="card-title alignCenter">{{book.author}}</h6>
       <div class="alignCenter">
-        <p>{{book.price}} €</p>
         <img [src]="book.photoUrl" class="card-img-top imgBook" [alt]="book.name">
       </div>
       <div class="card-body">
-        <p class="card-text">{{book.description}}</p>
+        <p class="alignCenter">{{book.price}}€</p>
+        <p class="card-text alignCenter">{{book.description}}</p>
         <div class="alignCenter" (click)="bookService.addBookToCart(book)">
           <i class="fas fa-cart-plus addCar"></i>
         </div>

@@ -20,7 +20,7 @@ export class BookService {
   }
 
   public getBooksFromCart(): Book[] {
-    let listBook: Book[] = JSON.parse(localStorage.getItem('listBook'));
+    let listBook: Book[] = JSON.parse(localStorage.getItem('listCartBook'));
     if (listBook === null) {
       listBook = [];
     }
@@ -28,7 +28,7 @@ export class BookService {
   }
 
   public addBookToCart(book: Book) {
-    let listBook: Book[] = JSON.parse(localStorage.getItem('listBook'));
+    let listBook: Book[] = JSON.parse(localStorage.getItem('listCartBook'));
     if (listBook === null) {
       book.amount = 1;
       listBook = [ book ];
@@ -43,8 +43,26 @@ export class BookService {
         listBook.push(book);
       }
     }
-    localStorage.setItem('listBook', JSON.stringify(listBook));
+    localStorage.setItem('listCartBook', JSON.stringify(listBook));
+    this._toastSuccess(book);
+  }
 
+  public updateAmountBook(book: Book): Book[] {
+    const listBookCart = this.getBooksFromCart();
+    const index = listBookCart.findIndex((item: Book) => {
+      return book.id === item.id;
+    });
+    if (index !== -1) {
+      listBookCart[index].amount = book.amount;
+      if (book.amount === 0) {
+        listBookCart.splice(index, 1);
+      }
+    }
+    localStorage.setItem('listCartBook', JSON.stringify(listBookCart));
+    return listBookCart;
+  }
+
+  private _toastSuccess(book: Book) {
     const Toast = Swal.mixin({
       toast: true,
       position: 'bottom-end',
@@ -57,8 +75,7 @@ export class BookService {
     });
     Toast.fire({
       icon: 'success',
-      title: 'Book added to cart'
+      title: book.name + ' added to cart'
     });
   }
-
 }
