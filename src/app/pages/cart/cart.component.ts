@@ -12,6 +12,7 @@ export class CartComponent implements OnInit {
 
   public listCartBook: Book[] = [];
   public totalPrice = 0;
+  public Math = Math;
 
   constructor(
     private readonly _bookService: BookService
@@ -29,7 +30,7 @@ export class CartComponent implements OnInit {
     listCartBook.forEach((book: Book) => {
       totalPrice += book.amount * book.price;
     });
-    this.totalPrice = totalPrice;
+    this.totalPrice = Math.round(totalPrice * 100) / 100;
   }
 
   public onInputNumberChange(action: string, book: Book) {

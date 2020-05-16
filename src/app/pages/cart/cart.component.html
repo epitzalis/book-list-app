@@ -14,7 +14,7 @@
       <i class="fas fa-plus iconPlusMinus"></i>
     </div>
     <div style="margin-top: 5px; margin-left: 1rem;">
-      x {{book.price}}€ = {{book.amount * book.price}} €
+      x {{book.price}}€ = {{Math.round((book.amount * book.price) * 100) / 100}}€
     </div>
   </div>
 
