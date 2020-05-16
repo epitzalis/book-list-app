@@ -6,7 +6,7 @@
   text-align: center;
 }
 
-.addCar {
+.addCart {
   cursor: pointer;
   padding: 8px;
   border: solid 1px;
@@ -14,6 +14,18 @@
   color: #007bff;
 }
 
-.addCar:hover {
+.addCart:hover {
   color: #0066ff;
+}
+
+.divAddCart {
+  position: absolute;
+  bottom: 1em;
+  right: 1.5rem;
+}
+
+.divPrice {
+  position: absolute;
+  bottom: 1.1rem;
+  left: 1.5rem;
 }
