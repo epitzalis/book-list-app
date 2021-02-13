@@ -9,6 +9,7 @@ import { PagesComponent } from './pages.component';
 import { HomeComponent } from './home/home.component';
 import { CartComponent } from './cart/cart.component';
 import { NavModule } from '../nav/nav.module';
+import { ReduceTextPipe } from './reduce-text/reduce-text.pipe';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { NavModule } from '../nav/nav.module';
     PagesComponent,
     HomeComponent,
     CartComponent,
+    ReduceTextPipe,
   ],
   exports: [
     PagesComponent,

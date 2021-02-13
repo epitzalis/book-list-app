@@ -3,9 +3,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Book } from '../models/book.model';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../environments/environment.prod';
 
-declare const Swal;
+import swal from 'sweetalert2';
+
 
 @Injectable()
 export class BookService {
@@ -15,8 +16,8 @@ export class BookService {
   ) { }
 
   public getBooks(): Observable<Book[]> {
-      const url: string = environment.API_REST_URL + `/book`;
-      return this._httpClient.get<Book[]>(url);
+    const url: string = environment.API_REST_URL + `/book`;
+    return this._httpClient.get<Book[]>(url);
   }
 
   public getBooksFromCart(): Book[] {
@@ -27,18 +28,22 @@ export class BookService {
     return listBook;
   }
 
+  public removeBooksFromCart(): void {
+    localStorage.setItem('listCartBook', null);
+  }
+
   public addBookToCart(book: Book) {
     let listBook: Book[] = JSON.parse(localStorage.getItem('listCartBook'));
-    if (listBook === null) {
+    if (listBook === null) { // Create a list with the book
       book.amount = 1;
       listBook = [ book ];
-    } else {
+    } else { 
       const index = listBook.findIndex((item: Book) => {
         return book.id === item.id;
       });
-      if (index !== -1) {
+      if (index !== -1) { // Update the quantity in the existing book
         listBook[index].amount++;
-      } else {
+      } else { 
         book.amount = 1;
         listBook.push(book);
       }
@@ -63,14 +68,14 @@ export class BookService {
   }
 
   private _toastSuccess(book: Book) {
-    const Toast = Swal.mixin({
+    const Toast = swal.mixin({
       toast: true,
       position: 'bottom-end',
       showConfirmButton: false,
       timer: 2000,
-      onOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer);
-        toast.addEventListener('mouseleave', Swal.resumeTimer);
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', swal.stopTimer);
+        toast.addEventListener('mouseleave', swal.resumeTimer);
       }
     });
     Toast.fire({

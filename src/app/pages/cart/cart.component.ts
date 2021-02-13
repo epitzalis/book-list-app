@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { BookService } from '../../services/book.service';
 import { Book } from '../../models/book.model';
 
-declare const $;
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
@@ -19,25 +18,36 @@ export class CartComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
     this.listCartBook = this._bookService.getBooksFromCart();
-    this.getTotalPrice(this.listCartBook);
-
+    this.totalPrice = this.getTotalPrice(this.listCartBook);
   }
 
-  public getTotalPrice(listCartBook: Book[]): void {
+  public getTotalPrice(listCartBook: Book[]): number {
     let totalPrice = 0;
     listCartBook.forEach((book: Book) => {
       totalPrice += book.amount * book.price;
     });
-    this.totalPrice = Math.round(totalPrice * 100) / 100;
+    return totalPrice;
   }
 
-  public onInputNumberChange(action: string, book: Book) {
+  public onInputNumberChange(action: string, book: Book): void {
     const amount = action === 'plus' ? book.amount + 1 : book.amount - 1;
     book.amount = Number(amount);
     this.listCartBook = this._bookService.updateAmountBook(book);
-    this.getTotalPrice(this.listCartBook);
+    this.totalPrice = this.getTotalPrice(this.listCartBook);
+  }
+
+  public onClearBooks(): void {
+    if (this.listCartBook && this.listCartBook.length > 0) {
+      this._clearListCartBook();
+    } else {
+       console.log("No books available");
+    }
+  }
+
+  private _clearListCartBook() {
+    this.listCartBook = [];
+    this._bookService.removeBooksFromCart();
   }
 
 

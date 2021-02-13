@@ -20,10 +20,14 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.getBooks();
+
+  }
+
+  public getBooks(): void {
     this.bookService.getBooks().pipe(take(1)).subscribe((resp: Book[]) => {
       this.listBook = resp;
     });
-
   }
 
 }
